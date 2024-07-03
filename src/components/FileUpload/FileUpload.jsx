@@ -64,6 +64,10 @@ const FileUpload = () => {
                             </div>
                         </div>
                         
+                        {/* button upload */}
+                        <button className='w-[350px] p-2.5 mt-4 font-bold text-base bg-blue-700 hover:bg-blue-500 border-none rounded-lg text-white' onClick={()=>{}}>
+                            Upload
+                        </button>
                     </>
                 )
             }
