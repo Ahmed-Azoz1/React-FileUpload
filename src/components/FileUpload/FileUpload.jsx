@@ -20,6 +20,15 @@ const FileUpload = () => {
     return (
         <div>
             <input type="file" ref={inputRef} onChange={handleFileChange} className="hidden" />
+
+            {/* button */}
+            {
+                !selectedFile && (
+                    <button className='' onClick={onChooseFile}>
+                        <span></span>
+                    </button>
+                )
+            }
         </div>
     )
 }
