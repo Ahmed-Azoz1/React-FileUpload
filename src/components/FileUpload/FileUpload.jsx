@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useRef, useState } from 'react'
 import { MdOutlineFileUpload,MdOutlineDescription,MdOutlineClose } from "react-icons/md";
 
@@ -33,6 +34,25 @@ const FileUpload = () => {
         setUploadStatus("select")
     }
 
+    // button Upload file
+    const handleUpload = async ()=>{
+        // upload Done
+        if(uploadStatus === 'done'){
+            clearFileInput();
+            return;
+        }
+        try{
+            // uploading
+            setUploadStatus("uploading");
+            
+            const formData = new FormData();
+            formData.append("file",selectedFile);
+            // post request to the server
+            const response = await axios
+        }catch(error){
+
+        }
+    }
 
     return (
         <div>
@@ -73,7 +93,7 @@ const FileUpload = () => {
                         </div>
 
                         {/* button upload */}
-                        <button className='w-[350px] p-2.5 mt-4 font-bold text-base bg-blue-700 hover:bg-blue-500 border-none rounded-lg text-white' onClick={()=>{}}>
+                        <button className='w-[350px] p-2.5 mt-4 font-bold text-base bg-blue-700 hover:bg-blue-500 border-none rounded-lg text-white' onClick={handleUpload}>
                             Upload
                         </button>
                     </>
