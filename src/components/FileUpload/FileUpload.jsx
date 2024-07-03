@@ -25,6 +25,14 @@ const FileUpload = () => {
         inputRef.current.click();
     }
 
+    // button close or reset state
+    const clearFileInput = ()=>{
+        inputRef.current.value = "";
+        setSelectedFile(null);
+        setProgress(0);
+        setUploadStatus("select")
+    }
+
 
     return (
         <div>
@@ -50,20 +58,20 @@ const FileUpload = () => {
                             <div className='flex flex-1 gap-4 justify-between items-center'>
 
                                 <div className='w-full gap-4'>
-                                    <h6 className='font-medium text-base'>File Name</h6>
+                                    <h6 className='font-medium text-base'>{selectedFile.name}</h6>
                                     {/* progress */}
                                     <div className='h-[6px] w-full bg-slate-200 rounded mt-3'>
-                                        <div className='w-[30%] h-[6px] bg-blue-700 rounded transition-all'></div>
+                                        <div className={`w-[${progress}%] h-[6px] bg-blue-700 rounded transition-all`}></div>
                                     </div>
                                 </div>
 
                                 {/* button close */}
-                                <button className='p-[8px] flex items-center justify-center bg-slate-200 border-none rounded-full' onClick={()=>{}}>
+                                <button className='p-[8px] flex items-center justify-center bg-slate-200 border-none rounded-full' onClick={clearFileInput}>
                                     <MdOutlineClose className='text-blue-700' size={20} />
                                 </button>
                             </div>
                         </div>
-                        
+
                         {/* button upload */}
                         <button className='w-[350px] p-2.5 mt-4 font-bold text-base bg-blue-700 hover:bg-blue-500 border-none rounded-lg text-white' onClick={()=>{}}>
                             Upload
