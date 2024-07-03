@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import FileUpload from './components/FileUpload/FileUpload'
 
 
 function App() {
   return (
-    <div className='container'>
+    <div className='flex justify-center items-center h-screen'>
       <FileUpload />
     </div>
   )
