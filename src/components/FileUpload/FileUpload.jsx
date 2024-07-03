@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useRef, useState } from 'react'
-import { MdOutlineFileUpload,MdOutlineDescription,MdOutlineClose } from "react-icons/md";
+import { MdOutlineFileUpload,MdOutlineDescription,MdOutlineClose,MdOutlineCheck } from "react-icons/md";
+import AxiosInstance from '../utils/GlobalApi';
 
 
 
@@ -47,10 +47,17 @@ const FileUpload = () => {
             
             const formData = new FormData();
             formData.append("file",selectedFile);
-            // post request to the server
-            const response = await axios
-        }catch(error){
 
+            // post request to the server
+            const response = await AxiosInstance.post('/uploader',formData,{
+                onUploadProgress: (e)=>{
+                    const percentCompeted = Math.round((e.loaded * 100)/e.total);
+                    setProgress(percentCompeted)
+                } 
+            });
+            setUploadStatus("done");
+        }catch(error){
+            setUploadStatus("select");
         }
     }
 
@@ -85,16 +92,37 @@ const FileUpload = () => {
                                     </div>
                                 </div>
 
-                                {/* button close */}
-                                <button className='p-[8px] flex items-center justify-center bg-slate-200 border-none rounded-full' onClick={clearFileInput}>
-                                    <MdOutlineClose className='text-blue-700' size={20} />
-                                </button>
+                                {
+                                    uploadStatus === "select" ? 
+                                    (
+                                        //  button close
+                                        <button className='p-[8px] flex items-center justify-center bg-slate-200 border-none rounded-full' onClick={clearFileInput}>
+                                            <MdOutlineClose className='text-blue-700' size={20} />
+                                        </button>
+                                    ) 
+                                    :
+                                    (
+                                        <button className='p-[8px] flex items-center justify-center bg-slate-200 border-none rounded-full'>
+                                            {
+                                                uploadStatus === "uploading" ? 
+                                                (`${progress}%`) 
+                                                : 
+                                                uploadStatus === "done" ?
+                                                (
+                                                    <MdOutlineCheck className='text-blue-700' size={24} />
+                                                )
+                                                :
+                                                null
+                                            }
+                                        </button>
+                                    )
+                                }
                             </div>
                         </div>
 
                         {/* button upload */}
                         <button className='w-[350px] p-2.5 mt-4 font-bold text-base bg-blue-700 hover:bg-blue-500 border-none rounded-lg text-white' onClick={handleUpload}>
-                            Upload
+                            {uploadStatus == "select" || uploadStatus == "uploading" ? "Uploading" :"Done"}
                         </button>
                     </>
                 )
